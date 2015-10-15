@@ -3,6 +3,10 @@ body {
     text-align: center;
     background: grey;
 }
+button {
+    height: 20px;
+    width: 70px
+}
 .board {
     height:432px;
     width: 504px;
@@ -16,5 +20,4 @@ body {
     border: 1px solid black;
     border-radius: 50px;
     float:left;
-
 }
