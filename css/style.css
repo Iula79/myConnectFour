@@ -30,7 +30,7 @@ input {
 }
 .board {
     height:432px;
-    width: 504px;
+    width:504px;
     margin: auto;
     border:1px solid black;
 }
@@ -40,6 +40,11 @@ input {
     width: 70px;
     border: 1px solid black;
     border-radius: 50px;
-    float:left;
+    overflow: hidden;
     background-color: white;
+}
+.col {
+    width:72px;
+    float:left;
+    height:600px;
 }
