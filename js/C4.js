@@ -3,16 +3,16 @@ $(document).ready(function() {
     //creating a board in js
     var newBoard = new MyBoard();
     newBoard.makeBoard();
+    $('button').text("Start Game");
     //creating a board in html
     var board = $('.board');
     //adding an event listener to each cell
     board.on("click", ".cell", function() {
-        var index = this.id.split(' ');
+        var index = this.id.split('-');
         var cell = newBoard.board[index[0]][index[1]];
         console.log(cell.playable);
         console.log(cell);
     });
-
 });
 
 
@@ -21,13 +21,15 @@ var Cell = function() {
     this.value = null;
     this.playable = true;
     this.setValue = function() {
-        this.playable = false;
-        this.value = player;
+        if (this.value == player1 || this.value == player2) {
+                return false;
+            }
+        };
     };
-};
 
 var MyBoard = function() {
     this.board = [];
+    this.player = null;
     this.makeBoard = function() {
         for (var i = 0; i < 6; i++) {
             //creating the rows in html
@@ -43,7 +45,7 @@ var MyBoard = function() {
                 //creating the cells in html
                 var myCell = $('<div>');
                 myCell.addClass("cell");
-                var identifier = i + ' ' + j;
+                var identifier = i + '-' + j;
                 myCell.attr("id", identifier);
                 //attach cell divs to row divs
                 myRow.append(myCell);
@@ -53,4 +55,10 @@ var MyBoard = function() {
             $('.board').append(myRow);
         }
     };
+    this.checkWin = function( ) {};
+};
+
+var Game = {
+
+
 };
