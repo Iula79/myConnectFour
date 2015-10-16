@@ -1,4 +1,4 @@
-if current player = player 1 whenever I click on a cell it takes the first identifier and puts the cell in the cell with the higher index number in that column. then it starts from that cell and counts 4
+//if current player = player 1 whenever I click on a cell it takes the first identifier and puts the cell in the //cell with the higher index number in that column. then it starts from that cell and counts 4
 
 
 Evaluate rows
@@ -19,3 +19,14 @@ Evaluate rows
             else  //blank
                 red = 0
                 black = 0
+
+---------------------------------------------------------------
+                var Cell = function() {
+                    this.value = null;
+                    this.playable = true;
+                    this.setValue = function() {
+                        if (this.value == player1 || this.value == player2) {
+                                return false;
+                            }
+                        };
+                    };
