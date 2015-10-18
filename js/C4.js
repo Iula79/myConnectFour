@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     console.log('loaded');
     //creating a board in js
     var newBoard = new MyBoard();
@@ -20,19 +21,30 @@ $(document).ready(function() {
             var cellIndex = (columnIndex.length - 1);
             var newId = index[0] + '-' + cellIndex;
             console.log(newId);
-            $(this).id = newId;
-            $(this).css('background-color','red');
+            //document.getElementById(newId).style.background = 'red';
+            console.log(cellIndex);
+            if (currentPlayer == "R") {
+                currentPlayer = "B";
+                document.getElementById(newId).style.background = 'red';
+                document.getElementById(newId).innerHTML = "R";
+            }
+            else
+            {
+                currentPlayer = "R";
+                document.getElementById(newId).style.background = 'green';
+                document.getElementById(newId).innerHTML = "G";
+            }
+            
         }
         //index1.push(new Cell());
         //index1.value = currentPlayer;
         console.log(columnIndex);
-        console.log(cellIndex);
 
     });
     console.log(newBoard);
     console.log(newBoard.board);
     console.log(newBoard.board[0]);
-    console.log(newBoard.board[0][0]);
+    //console.log(newBoard.board[0][0]);
     // board.click('.col',function(){
     //     console.log(event.target);
     //     for (var i = 0; i<6; i++){
@@ -54,7 +66,6 @@ var MyBoard = function() {
         for (var i = 0; i < 7; i++) {
             //creating the Cols in html
             var myCol = $('<div>');
-            console.log(myCol);
             //adding the class to the Cols
             myCol.addClass("col");
             myCol.attr('id', i);
@@ -76,7 +87,10 @@ var MyBoard = function() {
             $('.board').append(myCol);
         }
     };
-    this.checkWin = function() {};
+    this.checkWin = function() {
+
+
+    };
 };
 
 var Game = {
