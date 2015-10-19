@@ -38,6 +38,7 @@ input {
 .cell {
     height:70px;
     width: 70px;
+    float: left;
     border: 1px solid black;
     border-radius: 50px;
     overflow: hidden;

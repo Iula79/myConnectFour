@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     console.log('loaded');
     //creating a board in js
     var newBoard = new MyBoard();
@@ -7,32 +8,55 @@ $(document).ready(function() {
     //creating a board in html
     var board = $('.board');
     var currentPlayer = "R";
+
     //adding an event listener to each cell
     board.on("click", ".cell", function() {
+
         var index = this.id.split('-');
         //gives me the cell on the board that has that index
         //var cell = newBoard.board[index[0]][index[1]];
         //gives me the column(array) on the board that has that index
-        var columnIndex = newBoard.board[index[0]];
+        var selectedColumnIndex = newBoard.board[index[0]];
         //assigns that position the value of "r"
-        if (columnIndex.length <= 6) {
-            columnIndex.push(currentPlayer);
-            var cellIndex = (columnIndex.length - 1);
-            var newId = index[0] + '-' + cellIndex;
+        if (selectedColumnIndex.length <= 6) {
+            selectedColumnIndex.push(currentPlayer);
+            var rowIndex = (selectedColumnIndex.length - 1);
+            var newId = index[0] + '-' + rowIndex;
             console.log(newId);
-            $(this).id = newId;
-            $(this).css('background-color','red');
+            //document.getElementById(newId).style.background = 'red';
+            console.log(rowIndex);
+            if (currentPlayer == "R") {
+                currentPlayer = "B";
+                document.getElementById(newId).style.background = 'red';
+
+            } else {
+                currentPlayer = "R";
+                document.getElementById(newId).style.background = 'green';
+
+            }
+
+            var sum = 0;
+            console.log(sum);
+            var colIndex = parseInt(index[0]);
+            console.log(colIndex + 1);
+            while (newBoard.board[colIndex + 1][rowIndex] == currentPlayer) {
+                sum++;
+                colIndex++;
+                rowIndex++;
+                if (sum == 4) {
+                    console.log(currentPlayer + "wins");
+                }
+            }
         }
-        //index1.push(new Cell());
-        //index1.value = currentPlayer;
-        console.log(columnIndex);
-        console.log(cellIndex);
+
 
     });
-    console.log(newBoard);
-    console.log(newBoard.board);
-    console.log(newBoard.board[0]);
-    console.log(newBoard.board[0][0]);
+
+
+    //index1.push(new Cell());
+    //index1.value = currentPlayer;
+
+    //console.log(newBoard.board[0][0]);
     // board.click('.col',function(){
     //     console.log(event.target);
     //     for (var i = 0; i<6; i++){
@@ -54,7 +78,6 @@ var MyBoard = function() {
         for (var i = 0; i < 7; i++) {
             //creating the Cols in html
             var myCol = $('<div>');
-            console.log(myCol);
             //adding the class to the Cols
             myCol.addClass("col");
             myCol.attr('id', i);
@@ -76,8 +99,46 @@ var MyBoard = function() {
             $('.board').append(myCol);
         }
     };
-    this.checkWin = function() {};
 };
+
+// red = 0;
+// black = 0;
+//
+// for (i = 0; i < board.length; i++) {
+//     for (j = 0; j < board[i].length; j++) {
+//         console.log(i + "," + j);
+//         board[i]
+//     }
+//     console.log("\n");
+// }
+// this.checkWin = function() {
+//     sum = 0;
+//indexNum = parseInt(index[0]);
+//     while (sum <= 4) {
+//         if (newBoard.board[indexNum + 1][cellIndex + 1] == currentPlayer || newBoard.board[indexNum - 1][cellIndex - 1] == currentPlayer) {
+//             sum = sum++;
+//             if (sum == 4) {
+//                 return currentPlayer + "wins";
+//             }
+//         } else if (newBoard.board[indexNum + 1][cellIndex - 1] == currentPlayer &&
+//             newBoard.board[indexNum - 1][cellIndex + 1] == currentPlayer) {
+//             sum = sum++;
+//             if (sum == 4) {
+//                 return currentPlayer + "wins";
+//             }
+//         } else if (newBoard.board[indexNum][cellIndex - 1] == currentPlayer &&
+//             newBoard.board[indexNum][cellIndex + 1] == currentPlayer) {
+//             sum = sum++;
+//             if (sum == 4) {
+//                 return currentPlayer + "wins";
+//             }
+//         } else {
+//             sum = 0;
+//         }
+//     }
+//};
+
+
 
 var Game = {
 

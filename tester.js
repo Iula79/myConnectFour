@@ -30,3 +30,37 @@ Evaluate rows
                             }
                         };
                     };
+---------------------------------------------------------------------
+var switchPlayer = function {
+    if (currentPlayer == "R") {
+        this.currentPlayer = "B";
+        document.getElementById(newId).style.background = 'red';
+    }
+    else
+    {
+        this.currentPlayer = "R";
+        document.getElementById(newId).style.background = 'black';
+    }
+}
+when player plays:
+sum = 0
+check the cell that has index[0] +1 and index[1] + 1; 
+if it is red continue and add to the sum
+if sum is 4 players wins
+else hits black it starts checking index[0] -1 and index [1] - 1;
+if sum is 4 players wins
+else it hits black or no more cells it stops
+
+sum = 0
+check the cell that has index[0]  and index[1] + 1;
+if it is red continue and add to the sum
+if sum is 4 players wins
+else it hits black startschecking index[0] and index [1] - 1;
+if it is red continue and add to the sum
+else it hits black it stops
+if sum is 4 players wins
+
+
+check the cell that has
+ index [0] - 1
+ index [1] +1
