@@ -7,63 +7,44 @@ $(document).ready(function() {
     $('button').text("Start Game");
     //creating a board in html
     var board = $('.board');
-    var currentPlayer = "R";
+    //this below created confusion
+    //var currentPlayer = newBoard.currentPlayer;
 
     //adding an event listener to each cell
     board.on("click", ".cell", function() {
-
-        var index = this.id.split('-');
-        //gives me the cell on the board that has that index
+        //getting the coordinates of the cell clicked
+        var clickedCellCoordinates = this.id.split('-');
+        var colIndex = parseInt(clickedCellCoordinates[0]);
         //var cell = newBoard.board[index[0]][index[1]];
-        //gives me the column(array) on the board that has that index
-        var selectedColumnIndex = newBoard.board[index[0]];
-        //assigns that position the value of "r"
-        if (selectedColumnIndex.length <= 6) {
-            selectedColumnIndex.push(currentPlayer);
-            var rowIndex = (selectedColumnIndex.length - 1);
-            var newId = index[0] + '-' + rowIndex;
-            console.log(newId);
-            //document.getElementById(newId).style.background = 'red';
-            console.log(rowIndex);
-            if (currentPlayer == "R") {
-                currentPlayer = "B";
+        //gives me the array on the board that has the cell's column index
+        var selectedColumnArray = newBoard.board[colIndex];
+        //console.log(selectedColumnArray)
+        //pushing the value representing the current player on the first available spot on the board array (unless it is already full)
+        if (selectedColumnArray.length <= 6) {
+            selectedColumnArray.push(newBoard.currentPlayer);
+            console.log(selectedColumnArray)
+            //console.log(newBoard.board)
+            var rowIndex = (selectedColumnArray.length - 1);
+            var newId = colIndex + '-' + rowIndex;
+            //console.log(newId);
+            //console.log(rowIndex);
+            //Changing the color of the cell and switching player
+            checkUpDown(colIndex,rowIndex,newBoard.currentPlayer, newBoard.board);
+            if (newBoard.currentPlayer == "R") {
+                newBoard.currentPlayer = "B";
                 document.getElementById(newId).style.background = 'red';
 
             } else {
-                currentPlayer = "R";
-                document.getElementById(newId).style.background = 'green';
+                newBoard.currentPlayer = "R";
+                document.getElementById(newId).style.background = 'black';
 
             }
 
-            var sum = 0;
-            console.log(sum);
-            var colIndex = parseInt(index[0]);
-            console.log(colIndex + 1);
-            while (newBoard.board[colIndex + 1][rowIndex] == currentPlayer) {
-                sum++;
-                colIndex++;
-                rowIndex++;
-                if (sum == 4) {
-                    console.log(currentPlayer + "wins");
-                }
-            }
+            //console.log(newBoard.currentPlayer);
+
+            //checkWinner();
         }
-
-
     });
-
-
-    //index1.push(new Cell());
-    //index1.value = currentPlayer;
-
-    //console.log(newBoard.board[0][0]);
-    // board.click('.col',function(){
-    //     console.log(event.target);
-    //     for (var i = 0; i<6; i++){
-
-    //}
-    //});
-    //$('#1').click(function(){alert('hello')})
 });
 
 
@@ -101,16 +82,58 @@ var MyBoard = function() {
     };
 };
 
-// red = 0;
-// black = 0;
-//
-// for (i = 0; i < board.length; i++) {
-//     for (j = 0; j < board[i].length; j++) {
-//         console.log(i + "," + j);
-//         board[i]
-//     }
-//     console.log("\n");
-// }
+var checkWinner = function(cell, currentPlayer){
+
+
+    if (checkUpDown(col, row, player) ||
+        checkLeftRight(col, row, player) ||
+        checkUpLeftDownRight(col, row, player) ||
+        checkDownLeftUpRight(col, row, player)){
+      return true;
+    };
+    return false;
+}
+
+var checkUpDown = function(mycol, myrow, player, table){
+    var sum = 1;
+    var col = mycol;
+    var row = myrow;
+    // var player = thisplayer;
+    console.log("this is sum:");
+    console.log(sum);
+    console.log("this is column:");
+    console.log(col);
+    console.log("this is row:");
+    console.log(row);
+    console.log("this is player:");
+    console.log(player);
+    console.log(table[col][row]);
+    console.log(table[--col][row]);
+    console.log(table[col--][row]);
+    console.log(table[++col][row]);
+    console.log(table[col++][row]);
+    while (checkCell(++col,row, player,table)) {
+        console.log("here");
+        sum++;
+    }
+    while (checkCell(--col,row, player,table)) {
+        sum++;
+    }
+    if (sum >= 4) {
+        console.log(player +"wins");
+        return true;
+    }
+    return false;
+};
+
+var checkCell = function(col, row, player, table){
+    if (table[col][row]) {
+        return table[col][row] == player;
+    } else {
+        return false;
+    }
+
+}
 // this.checkWin = function() {
 //     sum = 0;
 //indexNum = parseInt(index[0]);
