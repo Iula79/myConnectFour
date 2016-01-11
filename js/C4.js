@@ -3,13 +3,14 @@ $(document).ready(function() {
     console.log('loaded');
     //creating a board in js
     var newBoard = new MyBoard();
-    newBoard.makeBoard();
+    //newBoard.makeBoard();
     $('button').text("Start Game");
+    $('button').on("click",function(){
+        newBoard.makeBoard();
+        $('button').text("Reset Game");
+    })
     //creating a board in html
     var board = $('.board');
-    //this below created confusion
-    //var currentPlayer = newBoard.currentPlayer;
-
     //adding an event listener to each cell
     board.on("click", ".cell", function() {
         //getting the coordinates of the cell clicked
@@ -29,32 +30,28 @@ $(document).ready(function() {
             //console.log(newId);
             //console.log(rowIndex);
             //Changing the color of the cell and switching player
-            checkUpDown(colIndex,rowIndex,newBoard.currentPlayer, newBoard.board);
+
             if (newBoard.currentPlayer == "R") {
-                newBoard.currentPlayer = "B";
                 document.getElementById(newId).style.background = 'red';
+                checkWinner(colIndex,rowIndex,newBoard.currentPlayer, newBoard.board);
+                newBoard.currentPlayer = "B";
 
             } else {
-                newBoard.currentPlayer = "R";
                 document.getElementById(newId).style.background = 'black';
-
+                newBoard.currentPlayer = "R";
+                checkWinner(colIndex,rowIndex,newBoard.currentPlayer, newBoard.board);
             }
-
-            //console.log(newBoard.currentPlayer);
-
-            //checkWinner();
         }
     });
 });
 
 
 
-
-
 var MyBoard = function() {
     this.currentPlayer = "R";
     this.board = [];
-    this.player = null;
+    this.player1 = null;
+    this.player2 = null;
     this.makeBoard = function() {
         for (var i = 0; i < 7; i++) {
             //creating the Cols in html
@@ -80,43 +77,32 @@ var MyBoard = function() {
             $('.board').append(myCol);
         }
     };
+    this.destroyBoard = function(){
+
+    }
 };
 
-var checkWinner = function(cell, currentPlayer){
-
-
-    if (checkUpDown(col, row, player) ||
-        checkLeftRight(col, row, player) ||
-        checkUpLeftDownRight(col, row, player) ||
-        checkDownLeftUpRight(col, row, player)){
+var checkWinner = function(col, row, player, table){
+    if (checkUpDown(col, row, player,table) ||
+        checkLeftRight(col, row, player,table) ||
+        checkUpLeftDownRight(col, row, player,table) ||
+        checkDownLeftUpRight(col, row, player,table)){
+            alert("winner is " + player)
       return true;
-    };
+    }
     return false;
-}
+};
 
-var checkUpDown = function(mycol, myrow, player, table){
+    var checkLeftRight = function(col, row, player, table){
+    var colRight = col;
+    var colLeft = col;
     var sum = 1;
-    var col = mycol;
-    var row = myrow;
-    // var player = thisplayer;
-    console.log("this is sum:");
-    console.log(sum);
-    console.log("this is column:");
-    console.log(col);
-    console.log("this is row:");
-    console.log(row);
-    console.log("this is player:");
-    console.log(player);
-    console.log(table[col][row]);
-    console.log(table[--col][row]);
-    console.log(table[col--][row]);
-    console.log(table[++col][row]);
-    console.log(table[col++][row]);
-    while (checkCell(++col,row, player,table)) {
+    while (definedCell(++colRight,row, player,table)) {
         console.log("here");
         sum++;
     }
-    while (checkCell(--col,row, player,table)) {
+    while (definedCell(--colLeft,row, player,table)) {
+        console.log("also here");
         sum++;
     }
     if (sum >= 4) {
@@ -126,42 +112,69 @@ var checkUpDown = function(mycol, myrow, player, table){
     return false;
 };
 
-var checkCell = function(col, row, player, table){
-    if (table[col][row]) {
+var checkUpDown = function(col, row, player, table){
+var rowUp = row;
+var rowDown = row;
+var sum = 1;
+while (definedCell(col,++rowUp, player,table)) {
+    sum++;
+}
+while (definedCell(col,--rowDown, player,table)) {
+    sum++;
+}
+if (sum >= 4) {
+    return true;
+}
+return false;
+};
+
+var checkUpLeftDownRight = function(col, row, player, table){
+var rowUL = row;
+var rowDR = row;
+var colUL = col;
+var colDR = col;
+var sum = 1;
+while (definedCell(--colUL,++rowUL, player,table)) {
+    sum++;
+}
+while (definedCell(++colDR,--rowDR, player,table)) {
+    sum++;
+}
+if (sum >= 4) {
+    return true;
+}
+return false;
+};
+
+var checkDownLeftUpRight = function(col, row, player, table){
+var rowUR = row;
+var rowDL = row;
+var colUR = col;
+var colDL = col;
+var sum = 1;
+while (definedCell(++colUR,++rowUR, player,table)) {
+    sum++;
+}
+while (definedCell(--colDL,--rowDL, player,table)) {
+    sum++;
+}
+if (sum >= 4) {
+    alert(player +"wins");
+    return true;
+}
+return false;
+};
+
+var definedCell = function(col, row, player, table){
+    if (table[col] && table[col][row]) {
         return table[col][row] == player;
     } else {
         return false;
     }
+};
 
+var resetBoard = function(){
 }
-// this.checkWin = function() {
-//     sum = 0;
-//indexNum = parseInt(index[0]);
-//     while (sum <= 4) {
-//         if (newBoard.board[indexNum + 1][cellIndex + 1] == currentPlayer || newBoard.board[indexNum - 1][cellIndex - 1] == currentPlayer) {
-//             sum = sum++;
-//             if (sum == 4) {
-//                 return currentPlayer + "wins";
-//             }
-//         } else if (newBoard.board[indexNum + 1][cellIndex - 1] == currentPlayer &&
-//             newBoard.board[indexNum - 1][cellIndex + 1] == currentPlayer) {
-//             sum = sum++;
-//             if (sum == 4) {
-//                 return currentPlayer + "wins";
-//             }
-//         } else if (newBoard.board[indexNum][cellIndex - 1] == currentPlayer &&
-//             newBoard.board[indexNum][cellIndex + 1] == currentPlayer) {
-//             sum = sum++;
-//             if (sum == 4) {
-//                 return currentPlayer + "wins";
-//             }
-//         } else {
-//             sum = 0;
-//         }
-//     }
-//};
-
-
 
 var Game = {
 
