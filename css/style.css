@@ -9,23 +9,48 @@ h1 {
     margin-left: 200px;
     margin-right: 200px;
 }
+
 button {
+
     height: 45px;
     width: 120px;
     color: black;
     border: 1px solid black;
     border-radius: 20px;
-    margin: 10px;
+    margin: 20px;
     font-size: 15px;
 }
-input {
+
+#userInput {
+    float:left;
+    margin-top: 20px;
+    margin-left: 350px;
+    vertical-align: middle;
+    line-height: 40px;
+    background: white;
+    height: 40px;
+    width: 100px;
+    border: 1px solid black;
+    border-radius: 20px;
+    text-align: center;
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+
+}
+#userInput2 {
+    float:right;
+    margin-top: 20px;
+    margin-right: 350px;
+    vertical-align: middle;
+    line-height: 40px;
+    background: white;
     height: 40px;
     width: 100px;
     color: black;
     border: 1px solid black;
     border-radius: 20px;
-    margin-bottom: 50px;
     text-align: center;
+    font-family: BlinkMacSystemFont;
     font-size: 15px;
 }
 .board {
