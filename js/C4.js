@@ -86,7 +86,7 @@ var MyBoard = function() {
             myCol.attr('id', i);
             //creating the Cols in js
             var col = [];
-            for (var j = 0; j < 6; j++) {
+            for (var j = 5; j >= 0; j--) {
                 //adding the cells to the Col
                 //col.push(new Cell());
                 //creating the cells in html
